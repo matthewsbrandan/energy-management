@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^5.19.1",
     "autoprefixer": "^10.4.20",
     "bcryptjs": "^2.4.3",
     "ejs": "^3.1.10",
@@ -26,6 +27,7 @@
     "@types/node": "^22.5.4",
     "@types/uuid": "^10.0.0",
     "postcss-cli": "^11.0.0",
+    "prisma": "^5.19.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }

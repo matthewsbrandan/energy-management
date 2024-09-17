@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 interface IDevice{
-  readonly id:	string;
+  id:	string;
   ip:	string;
   description?:	string;
   title?:	string;

@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String       @id @default(uuid())
+  name           String
+  email          String       @unique
+  password       String
+  avatar         String?
+  home_ip        String?
+  devices        Device[]
+  device_logs    DeviceLog[]
+  PreferenceType Preference[]
+  SchedulingType Scheduling[]
+
+  @@map("users")
+}
+
+model DeviceType {
+  id     String   @id @default(uuid())
+  name   String
+  data   String?
+  Device Device[]
+
+  @@map("device_types")
+}
+
+model Device {
+  id                String       @id @default(uuid())
+  ip                String
+  description       String?
+  title             String?
+  status            String
+  user_id           String?
+  type              String
+  subgroup          String?
+  state             String?
+  data              String?
+  created_at        DateTime     @default(now())
+  updated_at        DateTime     @updatedAt
+  status_changed_at DateTime
+  state_changed_at  DateTime
+  user              User?        @relation(fields: [user_id], references: [id])
+  device_logs       DeviceLog[]
+  device_type       DeviceType   @relation(fields: [type], references: [id])
+  SchedulingType    Scheduling[]
+
+  @@map("devices")
+}
+
+model DeviceLog {
+  id          String   @id @default(uuid())
+  description String
+  value       Decimal?
+  data        String?
+  created_at  DateTime
+  user_id     String
+  device_id   String
+  device      Device   @relation(fields: [device_id], references: [id])
+  user        User     @relation(fields: [user_id], references: [id])
+
+  @@map("device_logs")
+}
+
+model Preference {
+  id                    String  @id @default(uuid())
+  user_id               String
+  is_darkmode           Boolean
+  timeout               Int
+  requests_only_at_home Boolean
+  user                  User    @relation(fields: [user_id], references: [id])
+
+  @@map("preferences")
+}
+
+model Scheduling {
+  id                 String @id @default(uuid())
+  device_id          String
+  user_id            String
+  action             String
+  data               String
+  scheduled_time     String
+  scheduled_weekdays String
+  scheduled_date     String
+  device             Device @relation(fields: [device_id], references: [id])
+  user               User   @relation(fields: [user_id], references: [id])
+
+  @@map("schedulings")
+}

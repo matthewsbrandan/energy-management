@@ -29,3 +29,5 @@ Thumbs.db
 
 # Typescript cache files
 *.tsbuildinfo
+
+prisma/dev.*
