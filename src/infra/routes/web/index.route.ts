@@ -1,7 +1,9 @@
 import { Router } from 'express';
+import { route } from '../routenames';
+import { HomeFactory } from '../../factories/WebView/HomeFactory';
 
 const webRouter = Router();
 
-//webRouter.get('/', HomeController);1
+webRouter.get(route.home(), (req, res) => HomeFactory().handle(req,res));
 
 export { webRouter };

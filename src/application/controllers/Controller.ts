@@ -3,7 +3,7 @@ import { User } from "../../domain/entities/User";
 
 export interface HeaderOptionsType{
   import?: {
-    css?: ('modal.css' | 'drag-and-drop.css')[]
+    css?: ('modal.css')[]
   }
 }
 export type NotifyTypes = 'error' | 'success' | 'info'
