@@ -16,7 +16,7 @@ export class User{
   public email: string;
   public avatar?: string;
   public home_ip: string;
-  private password: string;
+  public password: string;
 
   constructor({ name, email, password, avatar = undefined, home_ip }: Omit<UserType, 'id'>, id?: string) {
     this.id = id ?? uuid();
