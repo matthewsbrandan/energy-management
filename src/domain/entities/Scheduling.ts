@@ -13,9 +13,9 @@ interface SchedulingType{
 
 export class Scheduling{
   public readonly id: string;
-  public device_id!: string;
-  public user_id!: string;
-  public action!: string;
+  public device_id: string;
+  public user_id: string;
+  public action: string;
   public data: any;
   public scheduled_time: any;
   public scheduled_weekdays: any;
