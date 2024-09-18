@@ -9,12 +9,13 @@ export class DeleteDeviceController extends Controller{
 
   async handle(request: Request, response: Response){
     try {
-      const data = await this.useCase.execute();
+      const { id } = request.params;
+
+      await this.useCase.execute(id);
 
       return response.status(200).json({
         result: true,
-        response: "Mensagem de sucesso",
-        data
+        response: "Dispositivo excluído com sucesso"
       })
     } catch (error) {
       return response.status(500).json({

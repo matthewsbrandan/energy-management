@@ -5,7 +5,7 @@ export class DeleteDeviceUseCase{
     private deviceRepo: IDeviceRepository
   ){}
 
-  async execute(){
-  
+  async execute(id: string){
+    await this.deviceRepo.delete(id);
   }
 }

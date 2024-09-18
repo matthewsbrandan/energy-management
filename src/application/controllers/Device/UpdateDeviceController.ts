@@ -9,12 +9,33 @@ export class UpdateDeviceController extends Controller{
 
   async handle(request: Request, response: Response){
     try {
-      const data = await this.useCase.execute();
+      const { id } = request.params;
+      const {
+        ip,
+        type,
+        data,
+        description,
+        state,
+        status,
+        subgroup,
+        title
+      } = request.body;
+
+      const resData = await this.useCase.execute(id, {
+        ip,
+        type,
+        data,
+        description,
+        state,
+        status,
+        subgroup,
+        title
+      });
 
       return response.status(200).json({
         result: true,
-        response: "Mensagem de sucesso",
-        data
+        response: "Dispositivo atualizado com sucesso",
+        data: resData
       })
     } catch (error) {
       return response.status(500).json({
