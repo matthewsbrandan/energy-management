@@ -1,8 +1,9 @@
-import { DeviceType } from "../entities/DeviceType";
+import { DeviceType, IDeviceType } from "../entities/DeviceType";
 
 export interface IDeviceTypeRepository{
   findAll: () => Promise<DeviceType[]>
-  store: (deviceType: Omit<DeviceType, 'id'>) => Promise<DeviceType>
-  update: (id: string, deviceType: Omit<DeviceType, 'id'>) => Promise<DeviceType>
+  findById: (id: string)  => Promise<DeviceType>
+  store: (deviceType: Omit<IDeviceType, 'id'>) => Promise<DeviceType>
+  update: (id: string, deviceType: Omit<IDeviceType, 'id'>) => Promise<DeviceType>
   delete: (id: string) => Promise<void>
 }

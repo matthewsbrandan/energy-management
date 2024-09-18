@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { Controller } from "../Controller";
-import { FindAllDeviceTypeUseCase } from "../../../domain/useCases/DeviceType/FindAllDeviceType/FindAllDeviceTypeUseCase";
+import { FindAllDevicesUseCase } from "../../../domain/useCases/Device/FindAllDevices/FindAllDevicesUseCase";
 
-export class FindAllDeviceTypeController extends Controller{
+export class FindAllDevicesController extends Controller{
   constructor(
-    private useCase: FindAllDeviceTypeUseCase
+    private useCase: FindAllDevicesUseCase
   ){ super() }
 
   async handle(request: Request, response: Response){
@@ -13,7 +13,7 @@ export class FindAllDeviceTypeController extends Controller{
 
       return response.status(200).json({
         result: true,
-        response: "Tipos de dispositivos carregados com sucesso",
+        response: "Lista de dispositivos carregada com sucesso",
         data
       })
     } catch (error) {

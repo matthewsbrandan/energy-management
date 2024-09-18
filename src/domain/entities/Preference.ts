@@ -9,7 +9,7 @@ interface PreferenceType{
 }
 export class Preference{
   public readonly id: string;
-  public user_id!: string;
+  public user_id: string;
   public is_darkmode?: boolean;
   public timeout?: number;
   public requests_only_at_home?: boolean;

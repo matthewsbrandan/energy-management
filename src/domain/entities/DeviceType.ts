@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-export interface DeviceTypeType{
+export interface IDeviceType{
   id:	string;
   name:	string;
   data?: any;
@@ -11,7 +11,7 @@ export class DeviceType{
   public name:	string;
   public data?: any;
 
-  constructor(props: Omit<DeviceTypeType, 'id'>, id?: string){
+  constructor(props: Omit<IDeviceType, 'id'>, id?: string){
     Object.assign(this, props);
 
     this.id = id ?? uuid();

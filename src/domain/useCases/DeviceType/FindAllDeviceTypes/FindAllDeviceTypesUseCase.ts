@@ -1,6 +1,6 @@
 import { IDeviceTypeRepository } from "../../../repositories/IDeviceTypeRepository";
 
-export class FindAllDeviceTypeUseCase{
+export class FindAllDeviceTypesUseCase{
   constructor(
     private deviceTypeRepo: IDeviceTypeRepository
   ){}

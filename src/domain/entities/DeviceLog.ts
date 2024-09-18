@@ -11,12 +11,12 @@ interface DeviceLogType{
 }
 export class DeviceLog{
   public readonly id: string;
-  public description!:	string;
+  public description:	string;
   public value?:	number;
   public data?:	any;
-  public created_at!:	Date;
-  public user_id!:	string;
-  public device_id!:	string;
+  public created_at:	Date;
+  public user_id:	string;
+  public device_id:	string;
 
   constructor(props: Omit<DeviceLogType, 'id'>, id?: string){
     Object.assign(this, props)

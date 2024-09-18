@@ -1,4 +1,4 @@
-import { DeviceType } from "../../../domain/entities/DeviceType";
+import { DeviceType, IDeviceType } from "../../../domain/entities/DeviceType";
 import { IDeviceTypeRepository } from "../../../domain/repositories/IDeviceTypeRepository";
 import { prisma as db } from "../../config/prisma";
 
@@ -13,7 +13,15 @@ export class DeviceTypeRepository implements IDeviceTypeRepository{
     return deviceTypes.map(deviceType => this._instance(deviceType));
   }
 
-  async store(deviceType: Omit<DeviceType, "id">): Promise<DeviceType>{
+  async findById(id: string) : Promise<DeviceType> {
+    const deviceType = await db.deviceType.findUnique({ where: { id } });
+
+    if(!deviceType) throw new Error('Tipo de dispositivo não encontrado');
+
+    return this._instance(deviceType);
+  }
+
+  async store(deviceType: Omit<IDeviceType, "id">): Promise<DeviceType>{
     const existentDeviceType = await db.deviceType.findFirst({
       where: { name: deviceType.name }
     })
@@ -32,7 +40,7 @@ export class DeviceTypeRepository implements IDeviceTypeRepository{
     return this._instance(response);
   }
 
-  async update(id: string, deviceType: Omit<DeviceType, "id">) : Promise<DeviceType> {
+  async update(id: string, deviceType: Omit<IDeviceType, "id">) : Promise<DeviceType> {
     const existentDeviceType = await db.deviceType.findUnique({
       where: { id }
     })
@@ -55,7 +63,7 @@ export class DeviceTypeRepository implements IDeviceTypeRepository{
         where: { id }
       })
     }catch(e){
-      throw new Error('Não foi possível excluir esse registro.')
+      throw new Error('Não foi possível excluir esse tipo de dispositivo.')
     }
   }
 }
