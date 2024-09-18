@@ -19,7 +19,8 @@ export const route = {
     device_type: {
       get:    () => '/api/device-type',
       store:  () => '/api/device-type',
-      update: () => '/api/device-type'
+      update: () => '/api/device-type/:id',
+      delete: () => '/api/device-type/:id'
     }
   }
 }

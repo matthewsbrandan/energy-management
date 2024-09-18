@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-interface DeviceTypeType{
+export interface DeviceTypeType{
   id:	string;
   name:	string;
   data?: any;

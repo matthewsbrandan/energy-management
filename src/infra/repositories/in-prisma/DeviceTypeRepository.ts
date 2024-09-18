@@ -31,4 +31,31 @@ export class DeviceTypeRepository implements IDeviceTypeRepository{
     
     return this._instance(response);
   }
+
+  async update(id: string, deviceType: Omit<DeviceType, "id">) : Promise<DeviceType> {
+    const existentDeviceType = await db.deviceType.findUnique({
+      where: { id }
+    })
+
+    if(!existentDeviceType) throw new Error('Tipo de dispositivo não encontrado')
+
+    const response = await db.deviceType.update({ 
+      where: { id }, data: {
+        name: deviceType.name,
+        data: deviceType.data ? JSON.stringify(deviceType.data) : undefined
+      }
+    })
+
+    return this._instance(response);
+  }
+
+  async delete(id: string): Promise<void> {
+    try{
+      await db.deviceType.delete({
+        where: { id }
+      })
+    }catch(e){
+      throw new Error('Não foi possível excluir esse registro.')
+    }
+  }
 }
