@@ -12,4 +12,23 @@ export class DeviceTypeRepository implements IDeviceTypeRepository{
     const deviceTypes = await db.deviceType.findMany();
     return deviceTypes.map(deviceType => this._instance(deviceType));
   }
+
+  async store(deviceType: Omit<DeviceType, "id">): Promise<DeviceType>{
+    const existentDeviceType = await db.deviceType.findFirst({
+      where: { name: deviceType.name }
+    })
+
+    if(existentDeviceType) throw new Error(
+      'Já existe um tipo de dispositivo com esse nome'
+    )
+
+    const response = await db.deviceType.create({
+      data: {
+        name: deviceType.name,
+        data: deviceType.data ? JSON.stringify(deviceType.data) : undefined
+      }
+    });
+    
+    return this._instance(response);
+  }
 }

@@ -6,6 +6,6 @@ export class FindAllDeviceTypeUseCase{
   ){}
 
   async execute(){
-  
+    return await this.deviceTypeRepo.findAll()
   }
 }
