@@ -11,14 +11,20 @@ export class HomeController extends Controller{
     this.init(request, response)
 
     try {
-      const data = await this.useCase.execute();
-
-      return this.view('welcome.ejs')
+      if(this.auth_user) return await this.homePage()
+      else return this.landingPage()
     } catch (error) {
       return response.status(500).json({
         result: false,
         response: error.message
       })
     }
+  }
+  private landingPage(){
+    return this.view('welcome.ejs')
+  }
+  private async homePage(){
+    const data = await this.useCase.execute();
+    return this.view('home/index.ejs')
   }
 }

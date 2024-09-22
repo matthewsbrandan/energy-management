@@ -46,7 +46,8 @@ const app = new Vue({
         }
         
         notify({ type: 'success', text: res.response })
-        // [ ] redirecionar para tela inicial
+        
+        setTimeout(() => window.reload(), 500);
       })()
 
       if(this.state === 'loading') this.state = 'filling';
