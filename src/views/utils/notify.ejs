@@ -1,0 +1,28 @@
+<div
+  id="container-toast"
+  class="p-2 flex gap-2"
+  style="position: fixed; top: 0; right: 0; flex-direction: column; z-index: 9999;"
+></div>
+
+<script>
+  function notify({ type, text }){
+    const theme = 
+      type === 'primary' ? 'bg-blue-500' :
+      type === 'info' ? 'bg-cyan-500' : 
+      type === 'error' || type === 'danger' ? 'bg-red-600' :  
+      type === 'warning' ? 'bg-amber-500' :
+      type === 'success' ? 'bg-emerald-600' : 'bg-gray-500'
+
+    const element = document.createElement('div')
+    element.classList.add('rounded-lg', 'items-center', 'text-white', theme);
+    element.innerHTML = `
+      <div class="flex p-3 gap-2 text-sm min-w-[10rem]">
+        ${text}
+      </div>
+    `
+
+    document.getElementById('container-toast').appendChild(element)
+
+    setTimeout(() => element.remove(), 7.5 * 1000)
+  }
+</script>

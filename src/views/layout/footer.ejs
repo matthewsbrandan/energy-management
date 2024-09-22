@@ -1,0 +1,26 @@
+  <%- include('../utils/notify') -%>
+  <% if(messages && messages.length > 0){ %>
+    <script>
+      window.addEventListener('load', () => {
+        try{
+          const messages = JSON.parse('<%- JSON.stringify(messages) %>');
+          
+          messages.forEach((data) => {
+            try{
+              const [type, ...rest] = data.split(':')
+              const text = rest.join(':')
+              
+              notify({ type, text })
+            }catch(e){ console.error('[error-flash-message]', { e }) }
+          })
+        }catch(e){
+          console.error('[error-process-flash-message]', { e, messages: '<%- JSON.stringify(messages) %>' })
+
+          notify({ type: 'error', text: 'Houve um erro inesperado' })
+          return []
+        }
+      })
+    </script>
+  <% } %>
+</body>
+</html>

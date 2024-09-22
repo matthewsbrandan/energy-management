@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="bg-zinc-950 text-gray-500">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Management</title>
+  <link rel="shortcut icon" href="/images/icon.jpg" type="image/x-jpg">
+  <link href="/css/style.css" rel="stylesheet">
+  <% if(headerOptions && headerOptions.import && headerOptions.import.css) { headerOptions.import.css.forEach(function(css){ %>
+    <link rel="stylesheet" href="/css/<%- css -%>">
+  <% }) } %>
+<body class="h-screen flex items-center justify-center p-8">
+  <script src="/js/services/api.js"></script>

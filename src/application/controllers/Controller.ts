@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../../domain/entities/User";
+import { route } from "../../infra/routes/routenames";
 
 export interface HeaderOptionsType{
   import?: {
@@ -49,14 +50,14 @@ export class Controller{
       error,
       headerOptions,
       auth_user: this.auth_user,
+      route
     })
   }
 
   notify(type: NotifyTypes, message: string){
     this.verifyIfIsInitialized()
 
-    // [ ] resolver problema do flash
-    // this.request.flash('message', `${type}: ${message}`);
+    this.request.flash('message', `${type}: ${message}`);
   }
 
   redirectWithMessage(to: string, type: NotifyTypes, message: string){

@@ -1,13 +1,13 @@
 import { v4 as uuid } from 'uuid';
 import bcrypt from 'bcryptjs';
 
-interface UserType {
+export interface IUser {
   id: string;
   name: string;
   email: string;
   password: string;
   avatar?: string;
-  home_ip: string;
+  home_ip?: string;
 }
 
 export class User{  
@@ -15,10 +15,10 @@ export class User{
   public name: string;
   public email: string;
   public avatar?: string;
-  public home_ip: string;
+  public home_ip?: string;
   public password: string;
 
-  constructor({ name, email, password, avatar = undefined, home_ip }: Omit<UserType, 'id'>, id?: string) {
+  constructor({ name, email, password, avatar = undefined, home_ip }: Omit<IUser, 'id'>, id?: string) {
     this.id = id ?? uuid();
     this.name = name;
     this.email = email;
@@ -45,7 +45,7 @@ export class User{
     }
   }
   /** Método para exibir dados básicos do usuário (sem expor a senha) */
-  getPublicProfile(): Omit<UserType, 'password'> {
+  getPublicProfile(): Omit<IUser, 'password'> {
     return {
       id: this.id,
       name: this.name,

@@ -1,4 +1,4 @@
-import { User } from "../../../domain/entities/User";
+import { IUser, User } from "../../../domain/entities/User";
 import { IUserRepository, UserInstanceOptions } from "../../../domain/repositories/IUserRepository";
 import { prisma as db } from "../../config/prisma";
 
@@ -27,7 +27,7 @@ export class UserRepository implements IUserRepository{
 
     return this._instance(user, options)
   }
-  async createUser(user: Omit<User, 'id'>, options?: UserInstanceOptions): Promise<User> {
+  async createUser(user: Omit<IUser, 'id'>, options?: UserInstanceOptions): Promise<User> {
     if(!!await this.findUserByEmail(user.email)) throw new Error(
       'Este email já está sendo utilizado'
     )
