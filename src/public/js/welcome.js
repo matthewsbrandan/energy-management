@@ -47,7 +47,7 @@ const app = new Vue({
         
         notify({ type: 'success', text: res.response })
         
-        setTimeout(() => window.reload(), 500);
+        setTimeout(() => window.location.reload(), 500);
       })()
 
       if(this.state === 'loading') this.state = 'filling';
