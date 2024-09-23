@@ -1,14 +1,16 @@
 <%- include('../layout/header', headerOptions) -%>
 <main class="w-full h-full flex flex-col rounded-2xl shadow-lg border-2 border-zinc-800/50 overflow-hidden">
-  <%- include('../components/menu', { active: 'Home' }) -%>
+  <%- include('../components/menu', { active: 'Sincronizar Dispositivos' }) -%>
 
   <section class="flex-1 flex flex-wrap p-4">
     <div class="bg-zinc-800/60 flex-1 w-full h-full rounded-lg p-4 text-center text-lg flex items-center justify-center">
-      <p class="block max-w-[20rem] leading-tight">
-        Você ainda não sincronizou nenhum dispositivo a sua conta.
+      <p class="block max-w-[20rem] leading-none">
+        Não há nenhum dispositivo disponível.<br/>
+        <span class="text-sm leading-tight block mt-2 text-gray-600">
+          Para um novo dispositivo ficar disponível, ele deve estar conectado a mesma rede Wi-fi configurada na sua conta.
+        </span>
       </p>
     </div>
-
   </section>
 </main>
 <%- include('../layout/footer') -%>
