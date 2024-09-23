@@ -7,7 +7,7 @@ import { route } from "../routenames"
 
 const deviceRouter = Router()
 
-deviceRouter.get(route.api.device.get(), (req, res) => FindAllDevicesFactory().handle(req,res))
+deviceRouter.get(route.api.device.get(), (req, res) => FindAllDevicesFactory().controller.handle(req,res))
 deviceRouter.post(route.api.device.store(), (req, res) => StoreDeviceFactory().handle(req,res))
 deviceRouter.put(route.api.device.update(':id'), (req, res) => UpdateDeviceFactory().handle(req,res))
 deviceRouter.delete(route.api.device.delete(':id'), (req, res) => DeleteDeviceFactory().handle(req,res))

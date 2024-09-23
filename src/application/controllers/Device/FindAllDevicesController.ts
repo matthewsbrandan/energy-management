@@ -9,7 +9,7 @@ export class FindAllDevicesController extends Controller{
 
   async handle(request: Request, response: Response){
     try {
-      const data = await this.useCase.execute();
+      const data = await this.useCase.execute({ });
 
       return response.status(200).json({
         result: true,

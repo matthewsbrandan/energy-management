@@ -24,7 +24,9 @@ export class HomeController extends Controller{
     return this.view('welcome.ejs')
   }
   private async homePage(){
-    const data = await this.useCase.execute();
-    return this.view('home/index.ejs')
+    const devices = await this.useCase.execute();
+    return this.view('home/index.ejs', {
+      data: { devices }
+    })
   }
 }
