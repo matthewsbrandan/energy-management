@@ -1,12 +1,12 @@
 import express from 'express';
 import passport from 'passport';
 import { CreateUserFactory } from '../../factories/User/CreateUserFactory';
+import { route } from '../routenames';
 
-// --prefix: /auth
 const authRouter = express.Router();
 
-authRouter.post('/register', (req, res) => CreateUserFactory().handle(req,res));
-authRouter.post('/login', (req, res, next) => {
+authRouter.post(route.auth.register(), (req, res) => CreateUserFactory().handle(req,res));
+authRouter.post(route.auth.login(), (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if(err) return res.status(500).json({
       result: false,
@@ -31,7 +31,7 @@ authRouter.post('/login', (req, res, next) => {
     });
   })(req, res, next);
 });
-authRouter.post('/logout', (req, res, next) => {
+authRouter.post(route.auth.logout(), (req, res, next) => {
   req.logout(function(err) {
     if (err) { return next(err); }
     res.redirect('/');

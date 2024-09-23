@@ -19,10 +19,16 @@ export class Controller{
     )
   }
 
-  init(request: Request, response: Response){
+  init(request: Request, response: Response, required_auth = false){
     this.request = request
     this.response = response
     this.auth_user = this.request.user as User
+
+    if(required_auth && !this.auth_user) return this.redirectWithMessage(
+      route.home(),
+      'error',
+      'Você não está logado'
+    );
   }
   
   view(name: string, props?:{
@@ -64,5 +70,9 @@ export class Controller{
     this.notify(type,message)
 
     return this.response.redirect(to)
+  }
+
+  requiredAuth(){
+    
   }
 }

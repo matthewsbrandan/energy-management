@@ -1,5 +1,5 @@
 import { Device, IDevice } from "../../../domain/entities/Device";
-import { IDeviceRepository } from "../../../domain/repositories/IDeviceRepository";
+import { FindDeviceOptions, IDeviceRepository } from "../../../domain/repositories/IDeviceRepository";
 import { prisma as db } from "../../config/prisma";
 
 export class DeviceRepository implements IDeviceRepository{
@@ -43,8 +43,12 @@ export class DeviceRepository implements IDeviceRepository{
     }
   }
 
-  async findAll() : Promise<Device[]> {
-    const devices = await db.device.findMany();
+  async findAll(query?: any, options?: FindDeviceOptions) : Promise<Device[]> {
+    let params : any = {};
+    if(query) params.where = query;
+    if(options?.include) params.include = options.include;
+
+    const devices = await db.device.findMany(params);
     return devices.map(device => this._instance(device));
   }
 

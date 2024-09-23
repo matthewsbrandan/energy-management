@@ -5,7 +5,7 @@ import { webRouter } from "./web/index.route"
 const router = Router()
 
 router.use('/', webRouter)
-router.use('/api/', apiRouter)
+router.use('/', apiRouter) // --prefix: /api
 
 export { router }
 

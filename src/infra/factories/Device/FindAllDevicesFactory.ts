@@ -11,5 +11,5 @@ export const FindAllDevicesFactory = () => {
 
   const controller = new FindAllDevicesController(useCase);
 
-  return controller;
+  return { useCase, controller };
 }
