@@ -1,6 +1,6 @@
 /** required: /js/services/auth.js */
 
-const app = new Vue({
+new Vue({
   el: '#dynamic-form',
   data: {
     section: 'sign-in', // sign-in | sign-up
