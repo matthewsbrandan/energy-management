@@ -1,9 +1,18 @@
-<header class="px-3 py-2 flex justify-between gap-4 w-full">
-  <h2 class="text-lg font-semibold leading-7 text-amber-400">Energy Management
-    
+<header
+  class="px-3 py-2 flex max-md:flex-col items-center justify-center md:justify-between gap-4 w-full"
+  id="menu"
+>
+  <h2
+    class="max-md:text-center max-md:w-full text-lg font-semibold leading-6 text-amber-400 hover:bg-gray-800/20 rounded"
+    v-on:click="is_expanded = !is_expanded"
+  >
+    Energy Management<br/>
+    <span class="hidden max-md:inline-block py-1 px-4 -mt-1 rounded-lg bg-gray-900 text-gray-100 text-xs leading-none">
+      <%= active %> <strong v-if="is_expanded">-</strong><strong v-if="!is_expanded">+</strong>
+    </span>
   </h2>
-
-  <ul class="flex gap-1">
+  <!-- hidden -->
+  <ul v-bind:class="{ 'hidden': !is_expanded, 'flex': is_expanded }" class="max-md:flex-col max-md:w-full md:flex gap-1">
     <li>
       <a href="<%= route.home() %>" class="block py-2 px-3 <%= active === 'Home' ? 'bg-gray-900': 'hover:bg-gray-900' %> rounded-b-lg font-semibold">Home</a>
     </li>
