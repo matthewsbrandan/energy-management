@@ -9,13 +9,13 @@
   }
 </script>
 
-<main class="w-full h-full flex rounded-2xl shadow-lg border-2 border-zinc-800/50 overflow-hidden">
-  <article class="flex-1" style="
+<main class="max-md:max-w-lg w-full h-full flex rounded-2xl shadow-lg border-2 border-zinc-800/50 overflow-hidden">
+  <article class="flex-1 hidden md:block" style="
     background-image: url('https://conteudo.imguol.com.br/c/noticias/f3/2021/08/31/lampada-energia-luz-1630442994250_v2_900x506.jpg');
     background-size: cover;
     background-position: center;
   "></article>
-  <section class="w-full max-w-lg bg-zinc-900/50 py-10 px-8 flex flex-col justify-center" id="dynamic-form">
+  <section class="max-w-lg w-full bg-zinc-900/50 py-10 px-8 flex flex-col justify-center" id="dynamic-form">
     <%- include('auth/card-sign-in') %>
     <%- include('auth/card-sign-up') %>
   </section>
