@@ -24,11 +24,9 @@ export class Controller{
     this.response = response
     this.auth_user = this.request.user as User
 
-    if(required_auth && !this.auth_user) return this.redirectWithMessage(
-      route.home(),
-      'error',
-      'Você não está logado'
-    );
+    if(required_auth && !this.auth_user) return false;
+    
+    return true;
   }
   
   view(name: string, props?:{
@@ -72,7 +70,11 @@ export class Controller{
     return this.response.redirect(to)
   }
 
-  requiredAuth(){
-    
+  redirectUnauthenticated(){
+    return this.redirectWithMessage(
+      route.home(),
+      'error',
+      'Você não está logado'
+    );
   }
 }

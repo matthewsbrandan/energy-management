@@ -8,8 +8,10 @@ export class PageSyncDeviceController extends Controller{
   ){ super() }
 
   async handle(request: Request, response: Response){
-    this.init(request, response, true);
-
-    return this.view('device/sync.ejs');
+    const isAuth = this.init(request, response, true);
+    if(!isAuth) return this.redirectUnauthenticated();
+    
+    const data = await this.useCase.execute({ user: this.auth_user });
+    return this.view('device/sync.ejs', { data });
   }
 }

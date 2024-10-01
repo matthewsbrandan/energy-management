@@ -10,7 +10,8 @@ export class SettingHomeIPController extends Controller{
 
   async handle(request: Request, response: Response){
     try {
-      this.init(request, response, true);
+      const isAuth = this.init(request, response, true);
+      if(!isAuth) return this.redirectUnauthenticated();
       
       await this.useCase.execute({
         user: this.auth_user,
