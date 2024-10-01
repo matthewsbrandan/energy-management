@@ -3,7 +3,20 @@
   <%- include('../components/menu', { active: 'Home' }) -%>
 
   <section class="flex-1 flex p-4">
-    <% if(data.devices && data.devices.length > 0){ %>
+    <% if(!auth_user.home_ip){ %>
+      <div class="bg-zinc-800/60 flex-1 w-full h-full rounded-lg p-4 text-center text-lg flex flex-col items-center justify-center">
+        <p class="block max-w-[22rem] leading-tight mb-4">
+          Você ainda não configurou seu <strong>Home-IP</strong>.<br/>
+          <small>
+            Configure-o na página de perfil para poder sincronizar seus dispositivos.
+          </small>
+        </p>
+        <a
+          href="<%= route.user.profile() %>?section=configurar-home-ip"
+          class="block text-center rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 mb-2"
+        >Configurar Home-IP</a>
+      </div>
+    <% }else if(data.devices && data.devices.length > 0){ %>
       <div class="bg-white/5 py-24 sm:py-32 w-full overflow-auto" style="max-height: calc(100vh - 10rem);">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:mx-0">

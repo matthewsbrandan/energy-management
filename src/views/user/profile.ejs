@@ -9,15 +9,18 @@
       <p class="text-sm font-semibold text-amber-400"><%= auth_user.email %></p>
     </div>
     <div class="ml-auto text-sm text-gray-400">
-      <% if(auth_user.home_ip){ %>
-        <strong>HOME IP:</strong>
-        <%= auth_user.home_ip %>
-      <% }else{ %>
-        <button
-          type="button"
-          class="block w-full text-center rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 mb-2"
-        >Configurar Home-IP</button>
-      <% } %>
+      <button
+        type="button"
+        class="block w-full text-center rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 mb-2"
+        onclick="callModalSettingHomeIp()"
+      >
+        <% if(auth_user.home_ip){ %>
+          <strong>HOME IP:</strong>
+          <%= auth_user.home_ip %>
+        <% }else{ %>
+          Configurar Home-IP
+        <% } %>
+      </button>
     </div>
   </div>
 
@@ -47,4 +50,5 @@
     public requests_only_at_home?: boolean; -->
   </section>
 </main>
+<%- include('partials/modal-home-ip') -%>
 <%- include('../layout/footer') -%>

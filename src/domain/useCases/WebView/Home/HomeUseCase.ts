@@ -3,8 +3,12 @@ import { FindAllDevicesUseCase } from "../../Device/FindAllDevices/FindAllDevice
 export class HomeUseCase{
   constructor(private findAllDevices: FindAllDevicesUseCase){}
 
-  async execute(){
-    // [ ] DEVE BUSCAR APENAS OS DISPOSITIVOS COM USER_ID IGUAL USUÁRIO AUTENTICADO
-    return await this.findAllDevices.execute({ options: { include: { device_type: true } } });
+  async execute({ user_id, ip }:{ ip?: string, user_id: string }){
+    if(!ip) return [];
+
+    return await this.findAllDevices.execute({
+      query: { ip, user_id },
+      options: { include: { device_type: true } }
+    });
   }
 }

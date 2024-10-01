@@ -10,6 +10,10 @@ export class ProfileController extends Controller{
   async handle(request: Request, response: Response){
     this.init(request, response, true);
 
-    return this.view('user/profile.ejs');
+    const section = request.query?.section;
+
+    return this.view('user/profile.ejs', {
+      data: { section }
+    });
   }
 }

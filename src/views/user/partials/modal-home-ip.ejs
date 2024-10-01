@@ -1,0 +1,57 @@
+<div
+  class="relative z-10"
+  v-bind:class="{ hidden: !is_expanded }"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+  id="modal-setting-home-ip"
+>
+  <button type="button" class="hidden" id="call-modal-setting-home-ip" v-on:click="is_expanded = true"></button>
+  <div class="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <div class="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+              <h3 class="text-base font-semibold leading-6 text-gray-400" id="modal-title">Configurar Home IP</h3>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">
+                  Todos dispostivos que você configurar devem estar conectados a mesma conexão à internet.<br/><br/>
+                  
+                  Home-IP é o IP do seu WIFI, que fará com que você tenha a capacidade de encontrar os dispositivos que também estão conectados a ela, e assim vinculá-los à sua conta.<br/><br/>
+
+                  <% if(auth_user.home_ip) {%>
+                    Tem certeza que deseja alterar seu Home-IP?<br/>
+                    Se fizer isso, todos os dispositivos que estão conectados a sua conta serão desconectados.
+                  <% } else { %>
+                    Deseja configurar a rede atual como o seu Home-IP?
+                  <% } %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+          <button type="button" class="inline-flex w-full justify-center rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 sm:ml-3 sm:w-auto">Tornar meu Home-IP</button>
+          <button
+            type="button"
+            class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+            v-on:click="is_expanded = false;"
+          >Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: '#modal-setting-home-ip',
+    data: { is_expanded: eval("<%= data?.section === 'configurar-home-ip' ? true: false %>") }
+  })
+  function callModalSettingHomeIp(){
+    const el = document.getElementById('call-modal-setting-home-ip');
+    if(el) el.click()
+  }
+</script>
