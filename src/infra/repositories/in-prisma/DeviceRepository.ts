@@ -83,4 +83,17 @@ export class DeviceRepository implements IDeviceRepository{
       throw new Error('Não foi possível excluir esse dispositivo.')
     }
   }
+  async unlinkDevices(user_id: string) : Promise<void> {
+    try{
+      await db.device.updateMany({
+        where: { user_id },
+        data: {
+          ip: undefined,
+          status: 'pareado'
+        }
+      })
+    }catch(e){
+      throw new Error('Não foi possível desvincular os dispositivos do seu usuário')
+    }
+  }
 }

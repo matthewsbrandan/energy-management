@@ -7,7 +7,11 @@ export const route = {
     logout:   () => '/auth/logout',          // [POST]
   },
   user: {
-    profile:  () => '/perfil'                // PAGE
+    profile:  () => '/perfil',                   // PAGE
+    setting: {
+      home_ip: () => '/perfil/home-ip',          // [POST]
+      preferences: () => '/perfil/preferencias', // [POST]
+    }
   },
   device: {
     sync: () => '/dispositivos/sincronizar', // PAGE

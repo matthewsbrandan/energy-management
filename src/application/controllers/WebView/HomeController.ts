@@ -10,15 +10,8 @@ export class HomeController extends Controller{
   async handle(request: Request, response: Response){
     this.init(request, response)
 
-    try {
-      if(this.auth_user) return await this.homePage()
-      else return this.landingPage()
-    } catch (error) {
-      return response.status(500).json({
-        result: false,
-        response: error.message
-      })
-    }
+    if(this.auth_user) return await this.homePage()
+    else return this.landingPage()
   }
   private landingPage(){
     return this.view('welcome.ejs')

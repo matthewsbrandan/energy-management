@@ -38,4 +38,16 @@ export class UserRepository implements IUserRepository{
 
     return this._instance(userCreated, options)
   }
+  async update(id: string, data: Partial<IUser>): Promise<User> {
+    try{
+      const user = await db.user.update({
+        where: { id },
+        data
+      })
+
+      return this._instance(user);
+    }catch(e){
+      throw new Error('Não foi possível atualizar o seu usuário')
+    }
+  }
 }

@@ -5,4 +5,5 @@ export interface IUserRepository{
   findUserByEmail(email: string, options?: UserInstanceOptions) : Promise<User | undefined>
   findUserById(id: string, options?: UserInstanceOptions) : Promise<User>
   createUser(user: Omit<IUser, 'id'>, options?: UserInstanceOptions) : Promise<User>
+  update(id: string, data: Partial<IUser>) : Promise<User>
 }
