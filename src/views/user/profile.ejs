@@ -15,7 +15,7 @@
         onclick="callModalSettingHomeIp()"
       >
         <% if(auth_user.home_ip){ %>
-          <strong>HOME IP:</strong>
+          <strong style="text-wrap-mode: nowrap;">HOME IP:</strong>
           <%= auth_user.home_ip %>
         <% }else{ %>
           Configurar Home-IP
