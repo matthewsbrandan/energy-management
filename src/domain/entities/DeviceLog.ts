@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-interface DeviceLogType{
+export interface IDeviceLog{
   id: string;
   description:	string;
   value?:	number;
@@ -18,8 +18,18 @@ export class DeviceLog{
   public user_id:	string;
   public device_id:	string;
 
-  constructor(props: Omit<DeviceLogType, 'id'>, id?: string){
+  constructor(props: Omit<IDeviceLog, 'id'>, id?: string){
     Object.assign(this, props)
+
     this.id = id ?? uuid()
+
+    this.convertDataStringToObject()
+  }
+
+  private convertDataStringToObject(){
+    if(this.data && typeof this.data === 'string'){
+      try{ this.data = JSON.parse(this.data); }
+      catch(e){ this.data = undefined; }
+    }
   }
 }

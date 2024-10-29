@@ -1,4 +1,5 @@
 import { User } from "../../../entities/User";
+import { IDeviceLogRepository } from "../../../repositories/IDeviceLogRepository";
 import { IDeviceRepository } from "../../../repositories/IDeviceRepository";
 
 interface DTO{
@@ -9,7 +10,8 @@ interface DTO{
 }
 export class UpdateDeviceStateUseCase{
   constructor(
-    private deviceRepo: IDeviceRepository
+    private deviceRepo: IDeviceRepository,
+    private deviceLogRepo: IDeviceLogRepository
   ){}
 
   async execute({ id, mode, state, user }:DTO){
@@ -39,7 +41,16 @@ export class UpdateDeviceStateUseCase{
       updated_at: now,
       state_changed_at: now
     })
-
+    await this.deviceLogRepo.create({
+      created_at: new Date(),
+      description: state === 'ativo' ? 'Dispositivo Ligado' : (
+        state === 'inativo' ? 'Dispositivo Desligado' : `Estado alterado para ${state}`
+      ),
+      device_id: id,
+      user_id: user.id,
+      value: state === 'ativo' ? 1 : state === 'inativo' ? 0 : -1
+    })
+    
     return { state }
   }
 }
