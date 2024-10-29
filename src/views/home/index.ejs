@@ -6,6 +6,7 @@
     }
   }
   const viewDevices = {};
+  const devices = JSON.parse('<%- JSON.stringify(data.devices) %>');
 </script>
 <main class="w-full h-full flex flex-col rounded-2xl shadow-lg border-2 border-zinc-800/50 overflow-hidden">
   <%- include('../components/menu', { active: 'Home' }) -%>
@@ -46,7 +47,7 @@
                     <%= device.description ?? '-- Sem descrição --' %>
                   </p>
                 </div>
-                <%- include('../components/footer-device', { device }) -%>
+                <%- include('./partials/footer-device', { device }) -%>
               </article>
             <% } %>
           </div>
@@ -62,4 +63,5 @@
   </section>
 </main>
 <script src="/js/services/device.js"></script>
+<%- include('./partials/modal-device-details') -%>
 <%- include('../layout/footer') -%>

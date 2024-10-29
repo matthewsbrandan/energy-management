@@ -1,0 +1,111 @@
+<div
+  class="relative z-10"
+  v-bind:class="{ hidden: !is_expanded }"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+  id="modal-device-details"
+>
+  <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <div class="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <div v-if="device">
+            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+              <h3 class="flex gap-2 text-base font-semibold leading-6 text-gray-400" id="modal-title">
+                <a
+                  href="#"
+                  v-bind:aria-label="device.status"
+                  v-bind:title="device.status"
+                  v-bind:class="{
+                    'relative z-10 rounded-full block px-1 min-w-0.5 my-0.5 text-xs font-medium': true,
+                    'bg-emerald-500': device.status === 'ativo',
+                    'bg-amber-500': device.status === 'pareado',
+                    'bg-red-600': device.status === 'desconectado'
+                  }"
+                ></a>
+                {{ device.title ?? `Dispositivo: ${device.id}` }}
+              </h3>
+            </div>
+            <div class="mt-14 text-sm">
+              <div class="grid grid-cols-8 w-full">
+                <div
+                  class="border-gray-500 border-l h-2 min-w-0.5 last:border-r"
+                  v-for="h of hours"
+                >
+                  <span style="
+                    transform: translateY(-100%) translateX(-50%);
+                    display: inline-block;
+                  ">{{ Array.isArray(h) ? h[0] : h }}</span>
+                  <span  style="
+                    text-align: right;
+                    margin-left: auto;
+                    transform: translateY(-100%) translateX(50%);
+                    display: inline-block;
+                  " v-if="Array.isArray(h)">
+                    {{ h[1] }}
+                  </span>
+                </div>
+              </div>
+              <div class="w-full mt-3 flex rounded-md overflow-hidden">
+                <div 
+                  v-for="[i, state] of state_by_percent_hour.entries()"
+                  v-bind:class="{ 'h-2 rounded-r-md': true, 'bg-blue-600': state.type === 'ativo', 'bg-gray-200/75': state.type === 'inativo', 'bg-gray-700/80': !state.type }" v-bind:style="{ width: `calc(${state.percent}% + 2px)`, marginLeft: '-2px', zIndex: state_by_percent_hour.length - i }"
+                ></div>
+              </div>
+              <div class="text-xs flex flex-col gap-0.5 mt-4">
+                <strong>Legenda:</strong>
+                <div class="flex items-center gap-2">
+                  <span class="bg-blue-600 min-w-2 h-2 block rounded-full"></span> Ativo
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="bg-gray-200/75 min-w-2 h-2 block rounded-full"></span> Inativo
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="bg-gray-700/80 min-w-2 h-2 block rounded-full"></span> Desconectado
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const vueDeviceDetails = new Vue({
+    el: '#modal-device-details',
+    data: {
+      is_expanded: false,
+      device: undefined,
+      hours: ((hour) => Array.from({ length: 8 }).map((_, i) => {
+        const parseHour = (hour) => {
+          let h = hour;
+          if(h < 0) h+=24;
+          return String(h).padStart(2, '0') + 'h'
+        }
+        if(i === 7) return [parseHour(hour - (8 - i)), parseHour(hour)]
+        return parseHour(hour - (8 - i))
+      }))(new Date().getHours()),
+      state_by_percent_hour: [
+        { type: undefined, percent: 20 },
+        { type: 'ativo',   percent: 30 },
+        { type: 'inativo', percent: 10 },
+        { type: 'ativo',   percent: 25 },
+        { type: 'inativo', percent: 15 }
+      ]
+    }
+  })
+  function callModalDeviceDetails(id){
+    const findedDevice = devices.find((device) => device.id === id);
+
+    if(!findedDevice){
+      notify({ type: 'warning', text: 'Não foi possível localizar o dispositivo' });
+      return;
+    }
+    
+    vueDeviceDetails.device = findedDevice;
+    vueDeviceDetails.is_expanded = true;
+  }
+</script>
