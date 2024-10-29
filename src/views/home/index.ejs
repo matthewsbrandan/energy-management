@@ -1,4 +1,12 @@
 <%- include('../layout/header', headerOptions) -%>
+<script>
+  const route = { 
+    device: {
+      state: (id) => "<%= route.device.state(':id') %>".replace(':id',id),
+    }
+  }
+  const viewDevices = {};
+</script>
 <main class="w-full h-full flex flex-col rounded-2xl shadow-lg border-2 border-zinc-800/50 overflow-hidden">
   <%- include('../components/menu', { active: 'Home' }) -%>
 
@@ -53,4 +61,5 @@
     <% } %>
   </section>
 </main>
+<script src="/js/services/device.js"></script>
 <%- include('../layout/footer') -%>

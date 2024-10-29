@@ -20,8 +20,11 @@ export class SyncDeviceUseCase{
 
     this.validate(device, user);
     
+    const now = new Date();
     await this.deviceRepo.update(id, {
       ...device,
+      updated_at: now,
+      status_changed_at: now,
       user_id: user.id,
       status: 'ativo'
     })

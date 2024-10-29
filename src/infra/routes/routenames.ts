@@ -15,7 +15,8 @@ export const route = {
   },
   device: {
     sync: () => '/dispositivos/sincronizar',     // PAGE
-    store_sync: (id: string) => `/dispositivo/sincronizar/${id}`
+    store_sync: (id: string) => `/dispositivo/sincronizar/${id}`,
+    state: (id: string) => `/dispositivo/state/${id}`,
   },
   api: {
     device: {

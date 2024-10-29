@@ -1,28 +1,45 @@
-<div class="flex gap-2 py-2 w-full">
+<div class="flex gap-2 py-2 w-full" id="footer-device-<%= device.id %>">
   <% if(device.device_type?.data?.monitoring){ %>
     <span>Indicador de atividade</span>
   <% } %>
-  <% if(device.device_type?.data?.toggle){ %>
-    <% if(device.state === 'ativo'){ %>
-      <button type="button" class="
-        flex-1 block w-full text-center rounded-full bg-gray-50/90 px-3 py-1.5 
-        text-xs font-semibold text-red-600 shadow-sm hover:bg-red-600 hover:text-white
-        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-        focus-visible:outline-red-600
-      ">Desligar</button>
-    <% }else{ %>
-      <button type="button" class="
-        flex-1 block w-full text-center rounded-full bg-gray-50/90 px-3 py-1.5 
-        text-xs font-semibold text-emerald-600 shadow-sm hover:bg-emerald-600 hover:text-white
-        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-        focus-visible:outline-red-600
-      ">Desligar</button>
-    <% } %>
-    <button type="button" class="
-      flex-1 block w-full text-center rounded-full hover:bg-gray-50/10 px-3 py-1.5 
-      text-xs font-semibold text-gray-400 shadow-sm
-      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-      focus-visible:outline-red-600
-    ">+ Detalhes</button>
-  <% } %>
+  <button
+    v-if="!!toggler"
+    type="button"
+    v-on:click="() => handleToggleState()"
+    v-bind:class="{ 'flex-1 block w-full text-center rounded-full bg-gray-50/90 px-3 py-1.5 text-xs font-semibold shadow-sm hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2': true, 'text-red-600 hover:bg-red-600 focus-visible:outline-red-600': toggler?.state === 'ativo', 'text-emerald-600 hover:bg-emerald-600 focus-visible:outline-emerald-600': toggler?.state !== 'ativo' }"
+  >{{ toggler?.state === 'ativo' ? 'Desligar':'Ligar' }}</button>
+  <button type="button" class="
+    flex-1 block w-full text-center rounded-full hover:bg-gray-50/10 px-3 py-1.5 
+    text-xs font-semibold text-gray-400 shadow-sm
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+    focus-visible:outline-gray-600
+  ">+ Detalhes</button>
 </div>
+<script>
+  viewDevices['<%= device.id %>'] = new Vue({
+    el: '#footer-device-<%= device.id %>',
+    data: {
+      id: '<%= device.id %>',
+      toggler: ((data) => Object.keys(data).length > 0 ? data : undefined)(
+        JSON.parse('<%- JSON.stringify(device.device_type?.data?.toggler ? { state: device.state }:{}) %>')
+      )
+    },
+    methods: {
+      handleToggleState: async function(){
+        console.log(this.toggler);
+        
+        if(!this.toggler) return;
+
+        const newState = this.toggler.state === 'ativo' ? 'inativo' : 'ativo';
+
+        const res = await deviceToggler(this.id, newState);
+        if(!res.result){
+          notify({ type: 'error', text: res.response });
+          return;
+        }
+
+        this.toggler.state = newState;
+      }
+    }
+  })
+</script>
