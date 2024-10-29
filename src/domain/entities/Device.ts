@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { DeviceType } from './DeviceType';
 
 export interface IDevice{
   id:	string;
@@ -15,6 +16,8 @@ export interface IDevice{
   updated_at:	Date;
   status_changed_at:	Date;
   state_changed_at:	Date;
+
+  device_type?: DeviceType;
 }
 export class Device{
   public readonly id:	string;
@@ -32,12 +35,16 @@ export class Device{
   public status_changed_at:	Date;
   public state_changed_at:	Date;
 
+  public device_type?: DeviceType;
+
   constructor(props: Omit<IDevice, 'id'>, id?: string){
     Object.assign(this, props);
 
     this.id = id ?? uuid();
 
     this.convertDataStringToObject()
+
+    if(props.device_type) this.device_type = new DeviceType(props.device_type, props.device_type.id);
   }
 
   private convertDataStringToObject(){

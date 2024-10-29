@@ -11,7 +11,8 @@ export class PageSyncDeviceUseCase{
 
   async execute({ user }:DTO){
     const devices = await this.deviceRepo.findAll({
-      ip: user.home_ip
+      ip: user.home_ip,
+      user_id: null
     }, { include: { device_type: true } })
 
     return { devices }

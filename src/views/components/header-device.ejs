@@ -1,0 +1,25 @@
+<header class="
+  flex max-md:flex-col max-md:w-full max-md:gap-1 items-center justify-between
+  gap-x-4 text-xs py-1.5 px-2 bg-gray-700 w-full rounded
+">
+  <time datetime="2020-03-16" class="text-gray-400"><%= new Date(device.state_changed_at).toDateString() %></time>
+  <div class="flex gap-1">
+    <a href="#" class="relative z-10 rounded-full bg-gray-50/90 px-2 py-0.5 text-xs font-medium text-gray-600 hover:bg-gray-100">
+      <%= device.device_type.name %>
+    </a>
+    <a
+      href="#"
+      aria-label="<%= device.status %>"      
+      title="<%= device.status %>"
+      class="
+        relative z-10 rounded-full px-1 min-w-0.5 py-0.5 text-xs font-medium <%= 
+          {
+            'ativo': 'bg-emerald-500',
+            'pareado': 'bg-amber-500',
+            'desconectado': 'bg-red-600'
+          }[device.status]
+        %>
+      "
+    ></a>
+  </div>
+</header>

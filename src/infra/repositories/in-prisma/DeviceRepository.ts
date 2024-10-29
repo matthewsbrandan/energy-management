@@ -43,6 +43,18 @@ export class DeviceRepository implements IDeviceRepository{
     }
   }
 
+  async find(id: string, query?: any, options?: FindDeviceOptions) : Promise<Device> {
+    let params : any = { where: {} };
+    if(query) params.where = query;
+    if(options?.include) params.include = options.include;
+
+    params.where.id = id;
+
+    const device = await db.device.findFirst(params);
+    if(!device) throw new Error('Dispositivo não encontrado');
+
+    return this._instance(device);
+  }
   async findAll(query?: any, options?: FindDeviceOptions) : Promise<Device[]> {
     let params : any = {};
     if(query) params.where = query;
@@ -51,7 +63,6 @@ export class DeviceRepository implements IDeviceRepository{
     const devices = await db.device.findMany(params);
     return devices.map(device => this._instance(device));
   }
-
   async store(device: Omit<IDevice, "id">): Promise<Device>{
     const response = await db.device.create({
       data: this._transform(device)
@@ -59,7 +70,6 @@ export class DeviceRepository implements IDeviceRepository{
     
     return this._instance(response);
   }
-
   async update(id: string, device: Omit<IDevice, "id">) : Promise<Device> {
     const existentDevice = await db.device.findUnique({
       where: { id }
@@ -73,7 +83,6 @@ export class DeviceRepository implements IDeviceRepository{
 
     return this._instance(response);
   }
-
   async delete(id: string): Promise<void> {
     try{
       await db.device.delete({

@@ -1,10 +1,10 @@
 export const removePrefix = (url: string, prefix: string) => url.replace(prefix, '');
 export const route = {
-  home: () => '/',                           // PAGE
+  home: () => '/',                               // PAGE
   auth: {
-    register: () => '/auth/register',        // [POST]
-    login:    () => '/auth/login',           // [POST]
-    logout:   () => '/auth/logout',          // [POST]
+    register: () => '/auth/register',            // [POST]
+    login:    () => '/auth/login',               // [POST]
+    logout:   () => '/auth/logout',              // [POST]
   },
   user: {
     profile:  () => '/perfil',                   // PAGE
@@ -14,7 +14,8 @@ export const route = {
     }
   },
   device: {
-    sync: () => '/dispositivos/sincronizar', // PAGE
+    sync: () => '/dispositivos/sincronizar',     // PAGE
+    store_sync: (id: string) => `/dispositivo/sincronizar/${id}`
   },
   api: {
     device: {
