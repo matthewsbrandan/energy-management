@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="http://localhost:3000/images/icon.jpg" type="image/x-jpg">
+  
+  <title>Device</title>
+  <style>
+    .off-light{ filter: brightness(.2); }
+  </style>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: black;">
+  <img
+    src="./src/public/images/light-on.png"
+    class="off-light"
+    style="width: 50rem; transition: filter 1s;"
+    id="lume"
+    onclick="toggleActive()"
+  />
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    const socket = io('http://localhost:3000');
+
+    let device_id = '369e6ba7-19b3-4fa6-91ed-11755a20c562';
+    const user_id = '56b92288-60fb-4b46-ad14-6539cf51e96f';
+
+    socket.emit('on', {
+      device_id,
+      type: 'c8beb024-464d-4af6-b01a-3e71c9fa182c',
+      ip: '127.0.0.1',
+      description: 'Lumus',
+    }, (res) => {
+      if(!res.result){
+        alert(res.response);
+        return;
+      }
+      console.log(res);
+      
+      device_id = res.data.id
+      console.log(`[device-id-received:${device_id}]`);
+
+      handleLumusState(res.data.state)
+      
+      listeningEventsOnDevice();
+    })    
+
+    function listeningEventsOnDevice(){
+    }
+    console.log('[listening-events-on-device]', [`toggler:${device_id}`]);
+    socket.on(`toggler:${device_id}`, (event) => {
+      console.log(`[toggler:${device_id}]`, event);
+      handleLumusState(event.state)
+    })
+    function handleLumusState(state){
+      const elLume = document.getElementById('lume');
+      if(state === 'ativo') elLume.classList.remove('off-light')
+      else elLume.classList.add('off-light')
+    }
+    function toggleActive(){
+      const elLume = document.getElementById('lume');
+      let newState = elLume.classList.contains('off-light') ? 'ativo' : 'inativo';
+      socket.emit('update-state', {
+        id: device_id,
+        user_id,
+        mode: 'toggler',
+        state: newState
+      }, (res) => {
+        if(!res.result){
+          alert(res.response)
+          return;
+        }
+        handleLumusState(res.data.state);
+      })
+    }
+  </script>
+</body>
+</html>
