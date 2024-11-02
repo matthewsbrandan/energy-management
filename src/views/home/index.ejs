@@ -62,6 +62,11 @@
     <% } %>
   </section>
 </main>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+  const socket = io();
+  const user_id = '<%= auth_user.id %>';
+</script>
 <script src="/js/services/device.js"></script>
 <%- include('./partials/modal-device-details') -%>
 <%- include('../layout/footer') -%>

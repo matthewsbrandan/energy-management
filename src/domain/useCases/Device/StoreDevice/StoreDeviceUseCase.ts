@@ -3,7 +3,7 @@ import { IDevice } from "../../../entities/Device";
 import { IDeviceRepository } from "../../../repositories/IDeviceRepository";
 import { IDeviceTypeRepository } from "../../../repositories/IDeviceTypeRepository";
 
-type DTO = Omit<IDevice, 'id' | 'created_at' | 'updated_at' | 'state_changed_at' | 'status_changed_at' | 'status'>
+type DTO = Omit<IDevice, 'id' | 'created_at' | 'updated_at' | 'state_changed_at' | 'status_changed_at' | 'status' | 'user_id'>
 export class StoreDeviceUseCase{
   constructor(
     private deviceRepo: IDeviceRepository,

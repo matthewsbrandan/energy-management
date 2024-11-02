@@ -14,5 +14,5 @@ export const UpdateDeviceStateFactory = () => {
 
   const controller = new UpdateDeviceStateController(useCase);
 
-  return controller;
+  return { controller, useCase };
 }

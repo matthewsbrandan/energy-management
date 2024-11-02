@@ -15,7 +15,7 @@ webRouter.get(route.user.profile(), (req, res) => ProfileFactory().handle(req, r
 webRouter.post(route.user.setting.home_ip(), (req, res) => SettingHomeIPFactory().handle(req, res))
 webRouter.get(route.device.sync(), (req, res) => PageSyncDeviceFactory().handle(req, res));
 webRouter.post(route.device.store_sync(':id'), (req, res) => SyncDeviceFactory().handle(req, res));
-webRouter.post(route.device.state(':id'), (req, res) => UpdateDeviceStateFactory().handle(req, res));
+webRouter.post(route.device.state(':id'), (req, res) => UpdateDeviceStateFactory().controller.handle(req, res));
 webRouter.use('/', authRouter) // --prefix: /auth
 
 export { webRouter };

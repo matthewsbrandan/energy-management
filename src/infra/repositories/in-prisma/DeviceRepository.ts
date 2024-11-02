@@ -21,12 +21,12 @@ export class DeviceRepository implements IDeviceRepository{
     description,
     state_changed_at,
     status_changed_at
-  }: Omit<IDevice, "id">){
+  }: Omit<IDevice, "id">, ignore: ('created_at')[] = []){
     if(data && typeof data !== 'string') data = JSON.stringify(data);
-    if(!created_at) created_at = new Date();
+    
     if(!updated_at) updated_at = new Date();
 
-    return {
+    let transformed : any = {
       ip,
       type,
       data,
@@ -41,6 +41,12 @@ export class DeviceRepository implements IDeviceRepository{
       state_changed_at,
       status_changed_at
     }
+
+    if(!ignore.includes('created_at')){
+      if(!created_at) created_at = new Date();
+      transformed.created_at = created_at;
+    } 
+    return transformed;
   }
 
   async find(id: string, query?: any, options?: FindDeviceOptions) : Promise<Device> {
@@ -78,7 +84,7 @@ export class DeviceRepository implements IDeviceRepository{
     if(!existentDevice) throw new Error('Dispositivo não encontrado')
 
     const response = await db.device.update({ 
-      where: { id }, data: this._transform(device)
+      where: { id }, data: this._transform(device, ['created_at'])
     })
 
     return this._instance(response);

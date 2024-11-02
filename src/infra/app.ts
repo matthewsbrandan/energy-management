@@ -19,6 +19,7 @@ import { User } from '@prisma/client'
 import { FindUserByEmailFactory } from './factories/User/FindUserByEmailFactory'
 import { FindUserByIdFactory } from './factories/User/FindUserByIdFactory'
 import { route } from './routes/routenames'
+import { SocketEvents } from './routes/socket-events'
 
 const app = express()
 const server = http.createServer(app)
@@ -76,9 +77,7 @@ app.use((req, res, next) => {
 
 app.use(router)
 
-io.on('connection', async (socket) => {
-  console.log(`Socket conectado ${socket.id}`);
-});
+io.on('connection', async (socket) => new SocketEvents(socket));
 
 const port = process.env.SERVER_PORT || 3000
 

@@ -2,7 +2,7 @@ import { User } from "../../../entities/User";
 import { IDeviceLogRepository } from "../../../repositories/IDeviceLogRepository";
 import { IDeviceRepository } from "../../../repositories/IDeviceRepository";
 
-interface DTO{
+export interface UpdateDeviceStateDTO{
   id: string,
   user: User,
   mode: 'toggler',
@@ -14,7 +14,7 @@ export class UpdateDeviceStateUseCase{
     private deviceLogRepo: IDeviceLogRepository
   ){}
 
-  async execute({ id, mode, state, user }:DTO){
+  async execute({ id, mode, state, user }:UpdateDeviceStateDTO){
     const error = [
       [!id, 'É obrigatório informar o id do dispositivo'],
       [mode !== 'toggler', 'Modo de alteração de estado do dispositivo inválido'],

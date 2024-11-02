@@ -14,5 +14,5 @@ export const StoreDeviceFactory = () => {
 
   const controller = new StoreDeviceController(useCase);
 
-  return controller;
+  return { controller, useCase };
 }
