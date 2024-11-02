@@ -9,4 +9,5 @@ export interface IDeviceRepository{
   update: (id: string, device: Omit<IDevice, 'id'>) => Promise<Device>
   delete: (id: string) => Promise<void>
   unlinkDevices: (user_id: string) => Promise<void>
+  count: (query: any) => Promise<number>
 }

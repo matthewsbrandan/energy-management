@@ -35,15 +35,15 @@
         <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
           <div class="mx-auto flex max-w-xs flex-col gap-y-4">
             <dt class="text-base text-gray-600">Dispositivos Conectados</dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-400 sm:text-5xl">0</dd>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-400 sm:text-5xl"><%= data.metrics.conecteds %></dd>
           </div>
           <div class="mx-auto flex max-w-xs flex-col gap-y-4">
             <dt class="text-base text-gray-600">Monitoramento de Energia<br/>(hoje)</dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-400 sm:text-5xl">0</dd>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-400 sm:text-5xl"><%= data.metrics.monitoring %></dd>
           </div>
           <div class="mx-auto flex max-w-xs flex-col gap-y-4">
             <dt class="text-base text-gray-600">Dispositivos Ativos</dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-400 sm:text-5xl">0</dd>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-400 sm:text-5xl"><%= data.metrics.actives %></dd>
           </div>
         </dl>
       </div>
