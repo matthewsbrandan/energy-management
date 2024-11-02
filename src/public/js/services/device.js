@@ -1,3 +1,4 @@
+//#region TOGGLER
 const communication_mode = 'socket'; // socket | api
 const deviceToggler = async (id, state) => {
   if(communication_mode === 'socket'){
@@ -31,3 +32,15 @@ devices.forEach((device) => {
     if(state) viewDevices[device.id].toggler = { state };
   })
 })
+
+const getTogglerLastEightHours = async (id) => {
+  try{
+    const { data } = await api.get(route.device.toggler.last_eight_hours(id));
+
+    return data;
+  }catch(e){
+    console.error(e);
+    return e;
+  }
+}
+//#endregion TOGGLER

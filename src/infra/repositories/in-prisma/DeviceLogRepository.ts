@@ -37,4 +37,15 @@ export class DeviceLogRepository implements IDeviceLogRepository{
     
     return this._instance(response);
   }
+  async findAll(device_id: string, query: any = {}, limit: number = 25, orderBy?: Record<string, 'asc' | 'desc'>) : Promise<DeviceLog[]>{
+    
+    const responses = await db.deviceLog.findMany({
+      where: { ...query, device_id },
+      ...(limit > -1 ? { take: limit }:{}),
+      orderBy
+    });
+
+    if(!responses) return [];
+    return responses.map(response => this._instance(response));
+  }
 }

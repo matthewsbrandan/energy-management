@@ -7,6 +7,7 @@ import { ProfileFactory } from '../../factories/WebView/ProfileFactory';
 import { SettingHomeIPFactory } from '../../factories/WebRequest/SettingHomeIPFactory';
 import { SyncDeviceFactory } from '../../factories/Device/SyncDeviceFactory';
 import { UpdateDeviceStateFactory } from '../../factories/Device/UpdateDeviceStateFactory';
+import { TogglerLastEightHoursFactory } from '../../factories/Device/TogglerLastEightHoursFactory';
 
 const webRouter = Router();
 
@@ -16,6 +17,7 @@ webRouter.post(route.user.setting.home_ip(), (req, res) => SettingHomeIPFactory(
 webRouter.get(route.device.sync(), (req, res) => PageSyncDeviceFactory().handle(req, res));
 webRouter.post(route.device.store_sync(':id'), (req, res) => SyncDeviceFactory().handle(req, res));
 webRouter.post(route.device.state(':id'), (req, res) => UpdateDeviceStateFactory().controller.handle(req, res));
+webRouter.get(route.device.toggler.last_eight_hours(':id'), (req, res) => TogglerLastEightHoursFactory().handle(req, res));
 webRouter.use('/', authRouter) // --prefix: /auth
 
 export { webRouter };
