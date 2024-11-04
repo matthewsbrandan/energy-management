@@ -23,10 +23,11 @@ export const route = {
   },
   api: {
     device: {
-      get:    () => '/api/device',                 // [GET]
-      store:  () => '/api/device',                 // [POST]
-      update: (id: string) => `/api/device/${id}`, // [PUT]
-      delete: (id: string) => `/api/device/${id}`, // [DELETE]
+      get:    () => '/api/device',                       // [GET]
+      store:  () => '/api/device',                       // [POST]
+      state:  (id: string) => `/api/device/state/${id}`, // [PUT]
+      update: (id: string) => `/api/device/${id}`,       // [PUT]
+      delete: (id: string) => `/api/device/${id}`,       // [DELETE]
     },
     device_type: {
       get:    () => '/api/device-type',                  // [GET]

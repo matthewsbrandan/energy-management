@@ -27,7 +27,6 @@ const deviceToggler = async (id, state) => {
 
 devices.forEach((device) => {
   if(!device.device_type?.data?.toggler) return;
-
   socket.on(`toggler:${device.id}`, ({ state }) => {
     if(state) viewDevices[device.id].toggler = { state };
   })
