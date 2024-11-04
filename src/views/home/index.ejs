@@ -3,6 +3,9 @@
   const route = { 
     device: {
       state: (id) => "<%= route.device.state(':id') %>".replace(':id',id),
+      toggler: {
+        last_eight_hours: (id) => "<%= route.device.toggler.last_eight_hours(':id') %>".replace(':id',id)
+      }
     }
   }
   const viewDevices = {};

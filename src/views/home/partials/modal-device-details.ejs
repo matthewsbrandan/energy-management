@@ -100,14 +100,8 @@
         }
         if(i === 7) return [parseHour(hour - (8 - i)), parseHour(hour)]
         return parseHour(hour - (8 - i))
-      }))(new Date().getHours()),
-      state_by_percent_hour: [
-        { type: undefined, percent: 20 },
-        { type: 'ativo',   percent: 30 },
-        { type: 'inativo', percent: 10 },
-        { type: 'ativo',   percent: 25 },
-        { type: 'inativo', percent: 15 }
-      ]
+      }))(new Date().getHours() + 1),
+      state_by_percent_hour: []
     }
   })
   function callModalDeviceDetails(id){
@@ -120,5 +114,20 @@
     
     vueDeviceDetails.device = findedDevice;
     vueDeviceDetails.is_expanded = true;
+
+    loadDeviceDetails(id)
+  }
+  async function loadDeviceDetails(id){
+    const res = await getTogglerLastEightHours(id);
+    console.log(res);
+    if(!res.result){
+      notify({
+        type: 'warning',
+        text: res.response
+      })
+      return;
+    }
+    
+    vueDeviceDetails.state_by_percent_hour = res.data;
   }
 </script>

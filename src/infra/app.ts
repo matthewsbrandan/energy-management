@@ -12,7 +12,7 @@ import flash from 'connect-flash';
 
 
 import { Strategy as LocalStrategy } from 'passport-local'
-import { Server } from 'socket.io'
+import { Server, Socket } from 'socket.io'
 
 import { router } from './routes/route'
 import { User } from '@prisma/client'
@@ -20,6 +20,7 @@ import { FindUserByEmailFactory } from './factories/User/FindUserByEmailFactory'
 import { FindUserByIdFactory } from './factories/User/FindUserByIdFactory'
 import { route } from './routes/routenames'
 import { SocketEvents } from './routes/socket-events'
+import { DefaultEventsMap } from 'socket.io/dist/typed-events'
 
 const app = express()
 const server = http.createServer(app)
@@ -77,7 +78,11 @@ app.use((req, res, next) => {
 
 app.use(router)
 
-io.on('connection', async (socket) => new SocketEvents(socket));
+export let shared_socket : Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any> = undefined;
+io.on('connection', async (socket) => {
+  shared_socket = socket;
+  new SocketEvents(socket)
+});
 
 const port = process.env.SERVER_PORT || 3000
 

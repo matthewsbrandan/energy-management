@@ -17,13 +17,17 @@ export const route = {
     sync: () => '/dispositivos/sincronizar',     // PAGE
     store_sync: (id: string) => `/dispositivo/sincronizar/${id}`,
     state: (id: string) => `/dispositivo/state/${id}`,
+    toggler: {
+      last_eight_hours: (id: string) => `/dispositivo/intercalador/ultimas-oito-horas/${id}`
+    }
   },
   api: {
     device: {
-      get:    () => '/api/device',                 // [GET]
-      store:  () => '/api/device',                 // [POST]
-      update: (id: string) => `/api/device/${id}`, // [PUT]
-      delete: (id: string) => `/api/device/${id}`, // [DELETE]
+      get:    () => '/api/device',                       // [GET]
+      store:  () => '/api/device',                       // [POST]
+      state:  (id: string) => `/api/device/state/${id}`, // [PUT]
+      update: (id: string) => `/api/device/${id}`,       // [PUT]
+      delete: (id: string) => `/api/device/${id}`,       // [DELETE]
     },
     device_type: {
       get:    () => '/api/device-type',                  // [GET]

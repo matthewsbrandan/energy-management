@@ -111,4 +111,11 @@ export class DeviceRepository implements IDeviceRepository{
       throw new Error('Não foi possível desvincular os dispositivos do seu usuário')
     }
   }
+  async count(where: any) : Promise<number>{
+    try{
+      return await db.device.count({ where })
+    }catch(e){
+      throw new Error('Não foi possível contar os dispositivos.')
+    }   
+  }
 }

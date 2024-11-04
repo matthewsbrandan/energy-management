@@ -14,17 +14,17 @@ export class UpdateDeviceStateUseCase{
     private deviceLogRepo: IDeviceLogRepository
   ){}
 
-  async execute({ id, mode, state, user }:UpdateDeviceStateDTO){
+  async execute({ id, mode, state, user }:UpdateDeviceStateDTO, is_internal: boolean = false){
     const error = [
       [!id, 'É obrigatório informar o id do dispositivo'],
       [mode !== 'toggler', 'Modo de alteração de estado do dispositivo inválido'],
-      [!user, 'É obrigatório estar autenticado'],
+      [!is_internal && !user, 'É obrigatório estar autenticado'],
       [!state, 'É obrigatório informar o novo estado']
     ].find(([hasError]) => hasError)?.[1] as string | undefined;
 
     if(error) throw new Error(error);
 
-    const device = await this.deviceRepo.find(id, { user_id: user.id }, { include: { device_type: true } })
+    const device = await this.deviceRepo.find(id, is_internal ? {} : { user_id: user.id }, { include: { device_type: true } })
     if(!device) throw new Error(
       'Não foi possível localizar o dispositivo'
     )
@@ -47,7 +47,7 @@ export class UpdateDeviceStateUseCase{
         state === 'inativo' ? 'Dispositivo Desligado' : `Estado alterado para ${state}`
       ),
       device_id: id,
-      user_id: user.id,
+      user_id: device.user_id,
       value: state === 'ativo' ? 1 : state === 'inativo' ? 0 : -1
     })
     
