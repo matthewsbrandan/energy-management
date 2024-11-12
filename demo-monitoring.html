@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="http://localhost:3001/images/icon.jpg" type="image/x-jpg">
+  
+  <title>Device</title>
+  <style>
+    .off-light{ filter: brightness(.2); }
+  </style>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: black;">
+  <div style="width: 50rem; height: 30rem;">
+    <canvas id="myChart"></canvas>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    let device_id = 'd12d58db-f012-4ec4-8dcc-72f11f9310d0';
+    const url = 'http://localhost:3001';
+    const type = '9976a4c8-c8f2-4094-a53f-931fed6db8aa';
+    const user_id = 'f15ada5e-8669-47aa-827e-af959cde9f4c';
+
+    const socket = io(url);
+
+    socket.emit('on', {
+      title: 'Random Monitor',
+      device_id,
+      type,
+      ip: '127.0.0.1',
+      description: 'Monitor',
+    }, (res) => {
+      if(!res.result){
+        alert(res.response);
+        return;
+      }
+      console.log(res);
+      
+      device_id = res.data.id
+      console.log(`[device-id-received:${device_id}]`);
+    })
+  </script>
+  <script>
+    const ctx = document.getElementById('myChart');
+  
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Monitoring',
+          data: [],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      }
+    });
+
+    const generateRandowNum = () => Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+
+    let datas = {};
+    let queue = {};
+    setInterval(() => {
+      const now = new Date();
+      
+      datas[now.getTime()] = generateRandowNum();
+      queue[now.getTime()] = generateRandowNum();
+      
+      const keys = Object.keys(datas);
+      if(keys.length > 20){
+        delete datas[keys[0]];
+        delete datas[keys[1]];
+        delete datas[keys[2]];
+        delete datas[keys[3]];
+      } 
+        
+      chart.data.labels = keys;
+      chart.data.datasets[0].data = Object.values(datas);
+
+      chart.update()
+
+      if(Object.keys(queue).length === 10){
+        socket.emit('update-state', {
+          id: device_id,
+          user_id,
+          mode: 'monitoring',
+          state: 'ativo',
+          data: { monitoring: queue, unit: 'Hz' }
+        }, (event) => {
+          console.log(event);
+          if(!event.result) alert(event.response);
+        });
+        queue = {}
+      }
+    }, 1500)
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="http://localhost:3000/images/icon.jpg" type="image/x-jpg">
+  <link rel="shortcut icon" href="http://localhost:3001/images/icon.jpg" type="image/x-jpg">
   
   <title>Device</title>
   <style>
@@ -21,14 +21,16 @@
 
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <script>
-    const socket = io('http://localhost:3000');
+    let device_id = 'bf312dcb-0851-479c-8466-b23c85b12b2f';
+    const url = 'http://localhost:3001';
+    const type = 'c41c8120-ef91-411a-b124-8d88e33b4894';
+    const user_id = 'f15ada5e-8669-47aa-827e-af959cde9f4c';
 
-    let device_id = '369e6ba7-19b3-4fa6-91ed-11755a20c562';
-    const user_id = '56b92288-60fb-4b46-ad14-6539cf51e96f';
+    const socket = io(url);
 
     socket.emit('on', {
       device_id,
-      type: 'c8beb024-464d-4af6-b01a-3e71c9fa182c',
+      type,
       ip: '127.0.0.1',
       description: 'Lumus',
     }, (res) => {
