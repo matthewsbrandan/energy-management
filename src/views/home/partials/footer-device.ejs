@@ -1,6 +1,17 @@
 <div class="flex gap-2 py-2 w-full" id="footer-device-<%= device.id %>">
-  <% if(device.device_type?.data?.monitoring){ %>
-    <span>Indicador de atividade</span>
+  <% if(device.device_type?.data?.monitoring && ((date) => {
+    const now = new Date();
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2,'0'),
+      String(now.getDate()).padStart(2,'0')
+    ].join('-') === date;
+  })(device.data?.monitoring?.date)){ %>
+    <span class="
+      flex-1 block w-full text-center rounded-full bg-gray-50/90 px-3 py-1.5 text-xs font-semibold shadow-sm
+      hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+      text-gray-600 hover:bg-gray-600 focus-visible:outline-gray-600
+    "><%= device.data.monitoring.total ?? 0 %><%= device.data.monitoring.unit ?? '' %></span>
   <% } %>
   <button
     v-if="!!toggler"

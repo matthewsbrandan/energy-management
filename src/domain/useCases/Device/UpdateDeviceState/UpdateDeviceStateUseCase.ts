@@ -73,7 +73,7 @@ export class UpdateDeviceStateUseCase{
     }
 
     const logs = Object.entries(data.monitoring).map(([timestamps, amount]) => {
-      const created_at = new Date(timestamps);
+      const created_at = new Date(Number(timestamps));
       if(date === formatDate(created_at)) total+=amount;
 
       return {

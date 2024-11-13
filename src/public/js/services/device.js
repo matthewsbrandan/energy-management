@@ -42,4 +42,14 @@ const getTogglerLastEightHours = async (id) => {
     return e;
   }
 }
+const getMonitoringLastEightHours = async (id) => {
+  try{
+    const { data } = await api.get(route.device.monitoring.last_eight_hours(id));
+
+    return data;
+  }catch(e){
+    console.error(e);
+    return e;
+  }
+} 
 //#endregion TOGGLER

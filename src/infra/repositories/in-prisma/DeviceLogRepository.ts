@@ -21,7 +21,7 @@ export class DeviceLogRepository implements IDeviceLogRepository{
     if(!created_at) created_at = new Date();
 
     return {
-      data,
+      ...(data ? { data }:{}),
       user_id,
       created_at,
       description,

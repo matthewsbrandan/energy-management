@@ -5,6 +5,9 @@
       state: (id) => "<%= route.device.state(':id') %>".replace(':id',id),
       toggler: {
         last_eight_hours: (id) => "<%= route.device.toggler.last_eight_hours(':id') %>".replace(':id',id)
+      },
+      monitoring: {
+        last_eight_hours: (id) => "<%= route.device.monitoring.last_eight_hours(':id') %>".replace(':id', id)
       }
     }
   }
@@ -65,6 +68,7 @@
     <% } %>
   </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script>
   const socket = io();
