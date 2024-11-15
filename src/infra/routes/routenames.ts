@@ -19,6 +19,9 @@ export const route = {
     state: (id: string) => `/dispositivo/state/${id}`,
     toggler: {
       last_eight_hours: (id: string) => `/dispositivo/intercalador/ultimas-oito-horas/${id}`
+    },
+    monitoring: {
+      last_eight_hours: (id: string) => `/dispositivo/monitoramento/ultimas-oito-horas/${id}`
     }
   },
   api: {

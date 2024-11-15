@@ -3,7 +3,6 @@ import { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { UpdateDeviceStateDTO } from "../../../domain/useCases/Device/UpdateDeviceState/UpdateDeviceStateUseCase";
 import { UpdateDeviceStateFactory } from "../../../infra/factories/Device/UpdateDeviceStateFactory";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { emit } from "process";
 
 interface ResultAndResponse{
   result: boolean,
@@ -20,7 +19,7 @@ export class SocketUpdateStateController{
   ){}
 
   async handle(event: UpdateStateParams, callback: (res: ResultAndResponse) => void){
-    const { id, mode, state, user_id } = event
+    const { id, mode, state, data, user_id } = event
 
     try{
       if(!user_id) throw new Error('É obrigatório informar o seu id');
@@ -33,7 +32,8 @@ export class SocketUpdateStateController{
         id,
         mode,
         state,
-        user
+        user,
+        data
       })
 
       callback({
@@ -45,6 +45,10 @@ export class SocketUpdateStateController{
       if(mode === 'toggler'){
         console.log(`toggler:${id}`);
         this.socket.broadcast.emit(`toggler:${id}`, res)
+      }
+      if(mode === 'monitoring'){
+        console.log(`monitoring:${id}`);
+        this.socket.broadcast.emit(`monitoring:${id}`, res)
       }
     }catch(e){
       callback({ result: false, response: e.message });

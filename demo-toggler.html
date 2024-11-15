@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="http://localhost:3000/images/icon.jpg" type="image/x-jpg">
+  <link rel="shortcut icon" href="http://localhost:3001/images/icon.jpg" type="image/x-jpg">
   
   <title>Device</title>
   <style>
-    .off-light{ filter: brightness(.2); }
+    .off-light                { filter: brightness(.2);    }
+    ::-webkit-scrollbar       { width: 12px;               }
+    ::-webkit-scrollbar-track { background: rgb(9 9 11); }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgb(55 65 81);
+      border-radius: 20px;
+      border: 3px solid rgb(9 9 11);
+    }
   </style>
 </head>
-<body style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: black;">
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: black; overflow-x: hidden;">
   <img
     src="./src/public/images/light-on.png"
     class="off-light"
