@@ -77,6 +77,7 @@
                 </em>
               </div>
               <button
+                v-if="!!device?.device_type?.data?.toggler"
                 type="button"
                 class="mt-8 flex-1 flex gap-2 items-center justify-center w-full text-center rounded-full bg-gray-50/90 px-3 py-1.5 text-xs font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 text-gray-600 hover:bg-gray-300 focus-visible:outline-gray-200"
               >
@@ -177,8 +178,8 @@
 
     const values = Object.values(res.data);
     
-    chart.data.labels = values.map(() => '');
-    chart.data.datasets[0].data = values;
+    chart.data.labels = values.splice(-40).map(() => '');
+    chart.data.datasets[0].data = values.splice(-40);
 
     chart.update()
   }

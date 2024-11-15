@@ -46,6 +46,10 @@ export class SocketUpdateStateController{
         console.log(`toggler:${id}`);
         this.socket.broadcast.emit(`toggler:${id}`, res)
       }
+      if(mode === 'monitoring'){
+        console.log(`monitoring:${id}`);
+        this.socket.broadcast.emit(`monitoring:${id}`, res)
+      }
     }catch(e){
       callback({ result: false, response: e.message });
     }

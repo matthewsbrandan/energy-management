@@ -26,10 +26,21 @@ const deviceToggler = async (id, state) => {
 }
 
 devices.forEach((device) => {
-  if(!device.device_type?.data?.toggler) return;
-  socket.on(`toggler:${device.id}`, ({ state }) => {
-    if(state) viewDevices[device.id].toggler = { state };
-  })
+  if(device.device_type?.data?.toggler){
+    socket.on(`toggler:${device.id}`, ({ state }) => {
+      if(state && viewDevices[device.id]) viewDevices[device.id].toggler = { state };
+    })
+  }
+  if(device.device_type?.data?.monitoring){
+    socket.on(`monitoring:${device.id}`, ({ monitoring }) => {
+      if(monitoring && viewDevices[device.id]){
+        const { total, unit } = monitoring;
+        viewDevices[device.id].monitoring = { total, unit };
+      }
+
+      loadDeviceMonitoringDetails(device.id);
+    })
+  }
 })
 
 const getTogglerLastEightHours = async (id) => {

@@ -8,6 +8,13 @@
   <title>Device</title>
   <style>
     .off-light{ filter: brightness(.2); }
+    ::-webkit-scrollbar       { width: 12px;               }
+    ::-webkit-scrollbar-track { background: rgb(9 9 11); }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgb(55 65 81);
+      border-radius: 20px;
+      border: 3px solid rgb(9 9 11);
+    }
   </style>
 </head>
 <body style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: black;">
@@ -88,7 +95,7 @@
           user_id,
           mode: 'monitoring',
           state: 'ativo',
-          data: { monitoring: queue, unit: 'Hz' }
+          data: { monitoring: queue, unit: 'kW' }
         }, (event) => {
           console.log(event);
           if(!event.result) alert(event.response);
