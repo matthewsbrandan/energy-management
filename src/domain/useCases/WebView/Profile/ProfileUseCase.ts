@@ -17,7 +17,7 @@ export class ProfileUseCase{
     const conecteds = devices.length;
     let actives = 0;
     let monitoring = 0;
-    let unit = undefined;
+    let unit = '';
 
     devices.forEach((device) => {
       if(device.status === 'ativo') actives++;
