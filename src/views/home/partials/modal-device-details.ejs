@@ -239,8 +239,10 @@
 
     const values = Object.values(res.data);
     
-    chart.data.labels = values.splice(-40).map(() => '');
-    chart.data.datasets[0].data = values.splice(-40);
+    const chartData = values.length > 40 ? values.splice(-40) : values;
+    
+    chart.data.labels = chartData.map(() => '');
+    chart.data.datasets[0].data = chartData;
 
     chart.update()
   }
