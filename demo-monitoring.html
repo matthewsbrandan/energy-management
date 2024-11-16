@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,11 +33,11 @@
     const socket = io(url);
 
     socket.emit('on', {
-      title: 'Random Monitor',
+      title: 'Geladeira',
       device_id,
       type,
       ip: '127.0.0.1',
-      description: 'Monitor',
+      description: 'Monitor de consumo de energia da geladeira',
     }, (res) => {
       if(!res.result){
         alert(res.response);
